@@ -13,26 +13,51 @@ class VendorMachine {
 
   public buySnack(): void {
     this.isOn = true;
+
+    if (this.snacksQty === 0) {
+      throw new Error("plus de snacks");
+    }
+
     this.snacksQty = this.snacksQty - 1;
     this.money = this.money + 2;
   }
 
   public reset(): void {
     this.isOn = false;
-    this.snacksQty = 50;
+    this.snacksQty = this.calculateLeftSnacksQty();
     this.money = 0;
     this.isOn = true;
   }
 
-  public shootWithFoot(): void {
-    this.snacksQty = this.snacksQty - 5;
+  private calculateLeftSnacksQty() {
+    return this.snacksQty + (50 - this.snacksQty);
+  }
+
+  public shootWithFoot(): string {
     this.isOn = false;
 
+    this.dropMoney();
+    this.dropSnacks();
+
+    return `Snacks tombés : ${this.snacksQty} et monnaie tombée : ${this.money}`;
+  }
+
+  private dropMoney() {
+    let moneyToDrop = 20;
     if (this.money < 20) {
-      throw new Error("bien essayé, mais y'a plus d'argent");
+      moneyToDrop = this.money;
+    }
+    this.money = this.money - moneyToDrop;
+  }
+
+  private dropSnacks() {
+    let snackQtyToDrop = 5;
+
+    if (this.snacksQty < 5) {
+      snackQtyToDrop = this.snacksQty;
     }
 
-    this.money = this.money - 20;
+    this.snacksQty = this.snacksQty - snackQtyToDrop;
   }
 }
 
