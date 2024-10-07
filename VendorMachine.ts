@@ -39,7 +39,7 @@ class VendorMachine {
     this.dropMoney();
     this.dropSnacks();
 
-    return `Snacks tombés : ${this.snacksQty} et monnaie tombée : ${this.money}`;
+    return `Snacks tombés : ${this.snacksQty} et monnaie`;
   }
 
   private dropMoney() {
